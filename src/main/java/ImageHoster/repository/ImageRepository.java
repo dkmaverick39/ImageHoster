@@ -7,20 +7,30 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.*;
 import java.util.List;
 
-//The annotation is a special type of @Component annotation which describes that the class defines a data repository
+/**
+ * The annotation is a special type of @Component annotation which describes that the class defines a data repository
+ * @author deepak
+ *
+ */
 @Repository
 public class ImageRepository {
 
-    //Get an instance of EntityManagerFactory from persistence unit with name as 'imageHoster'
+    /**
+     * Get an instance of EntityManagerFactory from persistence unit with name as 'imageHoster'
+     */
     @PersistenceUnit(unitName = "imageHoster")
     private EntityManagerFactory emf;
 
 
-    //The method receives the Image object to be persisted in the database
-    //Creates an instance of EntityManager
-    //Starts a transaction
-    //The transaction is committed if it is successful
-    //The transaction is rolled back in case of unsuccessful transaction
+    /**
+     * The method receives the Image object to be persisted in the database
+     * Creates an instance of EntityManager
+     * Starts a transaction
+     * The transaction is committed if it is successful
+     * The transaction is rolled back in case of unsuccessful transaction
+     * @param newImage
+     * @return
+     */
     public Image uploadImage(Image newImage) {
 
         EntityManager em = emf.createEntityManager();
@@ -36,9 +46,12 @@ public class ImageRepository {
         return newImage;
     }
 
-    //The method creates an instance of EntityManager
-    //Executes JPQL query to fetch all the images from the database
-    //Returns the list of all the images fetched from the database
+    /**
+     * The method creates an instance of EntityManager
+     * Executes JPQL query to fetch all the images from the database
+     * Returns the list of all the images fetched from the database
+     * @return
+     */
     public List<Image> getAllImages() {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Image> query = em.createQuery("SELECT i from Image i", Image.class);
@@ -47,10 +60,14 @@ public class ImageRepository {
         return resultList;
     }
 
-    //The method creates an instance of EntityManager
-    //Executes JPQL query to fetch the image from the database with corresponding title
-    //Returns the image in case the image is found in the database
-    //Returns null if no image is found in the database
+    /** 
+     * The method creates an instance of EntityManager
+     * Executes JPQL query to fetch the image from the database with corresponding title
+     * Returns the image in case the image is found in the database
+     * Returns null if no image is found in the database
+     * @param title
+     * @return
+     */
     public Image getImageByTitle(String title) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -61,9 +78,13 @@ public class ImageRepository {
         }
     }
 
-    //The method creates an instance of EntityManager
-    //Executes JPQL query to fetch the image from the database with corresponding id
-    //Returns the image fetched from the database
+    /**
+     * The method creates an instance of EntityManager
+     * Executes JPQL query to fetch the image from the database with corresponding id
+     * Returns the image fetched from the database
+     * @param imageId
+     * @return
+     */
     public Image getImage(Integer imageId) {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Image> typedQuery = em.createQuery("SELECT i from Image i where i.id =:imageId", Image.class).setParameter("imageId", imageId);
@@ -71,11 +92,14 @@ public class ImageRepository {
         return image;
     }
 
-    //The method receives the Image object to be updated in the database
-    //Creates an instance of EntityManager
-    //Starts a transaction
-    //The transaction is committed if it is successful
-    //The transaction is rolled back in case of unsuccessful transaction
+    /**
+     * The method receives the Image object to be updated in the database
+     * Creates an instance of EntityManager
+     * Starts a transaction
+     * The transaction is committed if it is successful
+     * The transaction is rolled back in case of unsuccessful transaction
+     * @param updatedImage
+     */
     public void updateImage(Image updatedImage) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
@@ -89,14 +113,17 @@ public class ImageRepository {
         }
     }
 
-    //The method receives the Image id of the image to be deleted in the database
-    //Creates an instance of EntityManager
-    //Starts a transaction
-    //Get the image with corresponding image id from the database
-    //This changes the state of the image model from detached state to persistent state, which is very essential to use the remove() method
-    //If you use remove() method on the object which is not in persistent state, an exception is thrown
-    //The transaction is committed if it is successful
-    //The transaction is rolled back in case of unsuccessful transaction
+    /** 
+     * The method receives the Image id of the image to be deleted in the database
+     * Creates an instance of EntityManager
+     * Starts a transaction
+     * Get the image with corresponding image id from the database
+     * This changes the state of the image model from detached state to persistent state, which is very essential to use the remove() method
+     * If you use remove() method on the object which is not in persistent state, an exception is thrown
+     * The transaction is committed if it is successful
+     * The transaction is rolled back in case of unsuccessful transaction
+     * @param imageId
+     */
     public void deleteImage(Integer imageId) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
@@ -111,6 +138,11 @@ public class ImageRepository {
         }
     }
 
+    /**
+     * It is used to save a new comment in database
+     * @param newComment
+     * @return
+     */
 	public Comment saveImageComment(Comment newComment) { 
 		 EntityManager em = emf.createEntityManager();
 	        EntityTransaction transaction = em.getTransaction();

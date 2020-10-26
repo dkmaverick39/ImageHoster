@@ -8,15 +8,22 @@ import javax.persistence.*;
 //The annotation is a special type of @Component annotation which describes that the class defines a data repository
 @Repository
 public class UserRepository {
-    //Get an instance of EntityManagerFactory from persistence unit with name as 'imageHoster'
+    /** 
+     * Get an instance of EntityManagerFactory from persistence unit with name as 'imageHoster'
+     * 
+     */
     @PersistenceUnit(unitName = "imageHoster")
     private EntityManagerFactory emf;
 
-    //The method receives the User object to be persisted in the database
-    //Creates an instance of EntityManager
-    //Starts a transaction
-    //The transaction is committed if it is successful
-    //The transaction is rolled back in case of unsuccessful transaction
+    /** 
+     * The method receives the User object to be persisted in the database
+     * Creates an instance of EntityManager
+     * Starts a transaction
+     * The transaction is committed if it is successful
+     * The transaction is rolled back in case of unsuccessful transaction
+     * 
+     * @param newUser
+     */
     public void registerUser(User newUser) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
@@ -32,11 +39,16 @@ public class UserRepository {
     }
 
 
-    //The method receives the entered username and password
-    //Creates an instance of EntityManager
-    //Executes JPQL query to fetch the user from User class where username is equal to received username and password is equal to received password
-    //Returns the fetched user
-    //Returns null in case of NoResultException
+    /**
+     * The method receives the entered username and password
+     * Creates an instance of EntityManager
+     * Executes JPQL query to fetch the user from User class where username is equal to received username and password is equal to received password
+     * Returns the fetched user
+     * Returns null in case of NoResultException
+     * @param username
+     * @param password
+     * @return
+     */
     public User checkUser(String username, String password) {
         try {
             EntityManager em = emf.createEntityManager();
