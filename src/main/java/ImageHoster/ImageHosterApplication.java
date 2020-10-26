@@ -11,3 +11,4 @@ public class ImageHosterApplication {
         SpringApplication.run(ImageHosterApplication.class, args);
     }
 }
+ 
