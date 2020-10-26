@@ -1,5 +1,6 @@
 package ImageHoster.controller;
 
+import ImageHoster.model.Comment;
 import ImageHoster.model.Image;
 import ImageHoster.model.Tag;
 import ImageHoster.model.User;
@@ -52,6 +53,7 @@ public class ImageController {
         Image image = imageService.getImage(imageId);
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
+        model.addAttribute("comments",image.getComments());
         if("deleteError".equalsIgnoreCase(errorType)) {
         	model.addAttribute("deleteError", true);
         }else if("editError".equalsIgnoreCase(errorType)) {
@@ -214,4 +216,21 @@ public class ImageController {
 
         return tagString.toString();
     }
+    
+    
+    /*
+     * This controller method is used when comment has to be posted on an Image
+     * After saving the comment , It redirects to "/images/{imageId}/{title}"
+     * 
+     * */
+    @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
+    public String saveComment(@PathVariable("imageId") Integer imageId,@PathVariable("imageTitle")String imageTitle,
+    		@RequestParam("comment") String text,HttpSession session) {
+    	Image image = imageService.getImage(imageId);
+    	User user = (User) session.getAttribute("loggeduser");
+    	Comment comment = imageService.saveImageComment(image,user,text);
+    	return "redirect:/images/"+image.getId()+"/"+image.getTitle();
+    }
+    
+    
 }

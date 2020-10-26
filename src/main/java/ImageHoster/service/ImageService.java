@@ -1,6 +1,8 @@
 package ImageHoster.service;
 
+import ImageHoster.model.Comment;
 import ImageHoster.model.Image;
+import ImageHoster.model.User;
 import ImageHoster.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,5 +47,17 @@ public class ImageService {
     public void deleteImage(Integer imageId) {
         imageRepository.deleteImage(imageId);
     }
+
+
+    // This method call saves comment of an Image in the database.
+	public Comment saveImageComment(Image image, User user, String text) {
+		Comment comment = new Comment();
+		comment.setCreatedDate(new Date()); 
+		comment.setImage(image); 
+		comment.setText(text); 
+		comment.setUser(user);
+ 		Comment newComment = imageRepository.saveImageComment(comment);
+		return newComment;  
+	}
 
 }
