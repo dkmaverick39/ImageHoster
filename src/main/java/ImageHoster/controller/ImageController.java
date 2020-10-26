@@ -185,9 +185,9 @@ public class ImageController {
         updatedImage.setUser(user);
         updatedImage.setTags(imageTags);
         updatedImage.setDate(new Date());
-
+        updatedImage.setComments(image.getComments()); 
         imageService.updateImage(updatedImage);
-        return "redirect:/images/" + updatedImage.getTitle();
+        return "redirect:/images/" +image.getId() +"/"+updatedImage.getTitle();
     }
 
 
@@ -205,6 +205,7 @@ public class ImageController {
     	Image image = imageService.getImage(imageId);
         User user = (User) session.getAttribute("loggeduser");
         User imageCreatedByUser = image.getUser(); 
+        //checks if the user who is deleting and user who created are same or not.
     	if(imageCreatedByUser.getId() != user.getId()) {
     		redirectAttributes.addAttribute("errorType","deleteError");
         	return "redirect:/images/"+image.getId()+"/"+image.getTitle(); 
