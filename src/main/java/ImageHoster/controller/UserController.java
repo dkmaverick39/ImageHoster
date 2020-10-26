@@ -28,10 +28,12 @@ public class UserController {
     @Autowired
     private ImageService imageService;
 
-    //This controller method is called when the request pattern is of type 'users/registration'
-    //This method declares User type and UserProfile type object
-    //Sets the user profile with UserProfile type object
-    //Adds User type object to a model and returns 'users/registration.html' file
+    /** 
+     * This controller method is called when the request pattern is of type 'users/registration'
+     * This method declares User type and UserProfile type object
+     * Sets the user profile with UserProfile type object
+     * Adds User type object to a model and returns 'users/registration.html' file
+     */
     @RequestMapping("users/registration")
     public String registration(Model model,@RequestParam(name="passwordTypeError",required=false)String error) {
         User user = new User();
